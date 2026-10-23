@@ -6,7 +6,7 @@ export default defineConfig({
     tasks: true,
   },
   scheduledTasks: {
-    '30 0/2 * * *': ['attendance'],
+    '30 */2 * * *': ['attendance'],
   },
   runtimeConfig: {
     tokens: '',
@@ -14,6 +14,22 @@ export default defineConfig({
     maxRetries: '3',
     nitro: {
       envPrefix: 'SKLAND_',
+    },
+  },
+  rolldownConfig: {
+    output: {
+      codeSplitting: {
+        groups: [
+          {
+            name: 'unstorage',
+            test: /node_modules\/unstorage\/dist\/drivers\/(?!redis)/,
+          },
+          {
+            name: 'unstorage-drivers-redis',
+            test: /node_modules\/unstorage\/dist\/drivers\/redis/,
+          },
+        ],
+      },
     },
   },
 })
